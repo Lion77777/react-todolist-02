@@ -20,6 +20,12 @@ export type FilterValues = 'all' | 'active' | 'completed'
 export const App = () => {
   const [filter, setFilter] = useState<FilterValues>('all')
 
+  const [todolists, setTodolists] = useState<Todolist[]>([
+    {id: v1(), title: 'What to learn', filter: 'all'},
+    {id: v1(), title: 'What to buy', filter: 'all'},
+    {id: v1(), title: 'What to do', filter: 'all'},
+  ])
+
   const [tasks, setTasks] = useState<Task[]>([
     { id: v1(), title: 'HTML&CSS', isDone: true },
     { id: v1(), title: 'JS', isDone: true },
@@ -58,13 +64,16 @@ export const App = () => {
 
   return (
       <div className="app">
-        <TodolistItem title="What to learn"
+        {todolists.map(todolist => (
+        <TodolistItem key={todolist.id}
+        todolist={todolist}
                       tasks={filteredTasks}
                       deleteTask={deleteTask}
                       changeFilter={changeFilter}
                       createTask={createTask}
                       changeTaskStatus={changeTaskStatus}
                       filter={filter}/>
+        ))}
       </div>
   )
 }
