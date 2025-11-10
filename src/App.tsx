@@ -9,6 +9,12 @@ export type Task = {
   isDone: boolean
 }
 
+export type Todolist = {
+  id: string
+  title: string
+  filter: FilterValues
+}
+
 export type FilterValues = 'all' | 'active' | 'completed'
 
 export const App = () => {
