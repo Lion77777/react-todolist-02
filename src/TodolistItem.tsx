@@ -42,7 +42,6 @@ export const TodolistItem = (props: Props) => {
       <div className='container'>
         <h3>{title}</h3>
         <Button title={'x'} onClick={deleteTodolistHandler} />
-
       </div>
       <CreateItemForm createItem={createTaskHandler} />
       {tasks.length === 0 ? (
