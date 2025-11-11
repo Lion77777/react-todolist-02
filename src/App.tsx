@@ -72,13 +72,13 @@ export const App = () => {
   return (
     <div className="app">
       {todolists.map(todolist => {
-        let filteredTasks = tasks
+        let filteredTasks = tasks[todolist.id]
 
         if (todolist.filter === 'active') {
-          filteredTasks = tasks.filter(task => !task.isDone)
+          filteredTasks = tasks[todolist.id].filter(task => !task.isDone)
         }
         if (todolist.filter === 'completed') {
-          filteredTasks = tasks.filter(task => task.isDone)
+          filteredTasks = tasks[todolist.id].filter(task => task.isDone)
         }
 
         return <TodolistItem key={todolist.id}
