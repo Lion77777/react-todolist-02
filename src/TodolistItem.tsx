@@ -8,7 +8,8 @@ type Props = {
   deleteTask: (todolistId: string, taskId: string) => void
   changeFilter: (todolistId: string, filter: FilterValues) => void
   createTask: (todolistId: string, title: string) => void
-  changeTaskStatus: (taskId: string, isDone: boolean) => void
+  changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
+  deleteTodolist: (todolistId: string) => void
 }
 
 export const TodolistItem = (props: Props) => {
@@ -19,10 +20,15 @@ export const TodolistItem = (props: Props) => {
     changeFilter,
     createTask,
     changeTaskStatus,
+    deleteTodolist
   } = props
 
   const [taskTitle, setTaskTitle] = useState('')
   const [error, setError] = useState<string | null>(null)
+
+  const deleteTodolistHandler = () => {
+    deleteTodolist(id)
+  }
 
   const createTaskHandler = () => {
     const trimmedTitle = taskTitle.trim()
@@ -51,7 +57,11 @@ export const TodolistItem = (props: Props) => {
 
   return (
     <div>
-      <h3>{title}</h3>
+      <div className='container'>
+        <h3>{title}</h3>
+        <Button title={'x'} onClick={deleteTodolistHandler} />
+
+      </div>
       <div>
         <input className={error ? 'error' : ''}
           value={taskTitle}
@@ -71,7 +81,8 @@ export const TodolistItem = (props: Props) => {
 
             const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
               const newStatusValue = e.currentTarget.checked
-              changeTaskStatus(task.id, newStatusValue)
+
+              changeTaskStatus(id, task.id, newStatusValue)
             }
 
             return (
