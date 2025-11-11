@@ -59,10 +59,15 @@ export const App = () => {
     setTodolists(filteredTodolists)
   }
 
-  const createTask = (title: string) => {
+  const createTask = (todolistId: string, title: string) => {
+    // const newTask = { id: v1(), title, isDone: false }
+    // const newTasks = [newTask, ...tasks]
+    // setTasks(newTasks)
+
     const newTask = { id: v1(), title, isDone: false }
-    const newTasks = [newTask, ...tasks]
-    setTasks(newTasks)
+    const newTasks = [newTask, ...tasks[todolistId]]
+
+    setTasks((prev) => ({...prev, [todolistId]: newTasks}))
   }
 
   const changeTaskStatus = (taskId: string, isDone: boolean) => {
