@@ -3,6 +3,8 @@ import type { FilterValues, Task, Todolist } from './App'
 import { Button } from './Button'
 import { CreateItemForm } from './CreateItemForm'
 import { EditableSpan } from './EditableSpan'
+import IconButton from '@mui/material/IconButton'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 type Props = {
   todolist: Todolist
@@ -51,7 +53,9 @@ export const TodolistItem = (props: Props) => {
         <h3>
           <EditableSpan itemTitle={title} onChange={changeTodolistTitleHandler} />
         </h3>
-        <Button title={'x'} onClick={deleteTodolistHandler} />
+        <IconButton onClick={deleteTodolistHandler}>
+          <DeleteIcon />
+        </IconButton>
       </div>
       <CreateItemForm createItem={createTaskHandler} />
       {tasks.length === 0 ? (
@@ -78,7 +82,9 @@ export const TodolistItem = (props: Props) => {
                 <input type="checkbox" checked={task.isDone}
                   onChange={changeTaskStatusHandler} />
                 <EditableSpan itemTitle={task.title} onChange={changeTaskTitleHandler} />
-                <Button title={'x'} onClick={deleteTaskHandler} />
+                <IconButton onClick={deleteTaskHandler}>
+                  <DeleteIcon />
+                </IconButton>
               </li>
             )
           })}
