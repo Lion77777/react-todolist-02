@@ -10,6 +10,7 @@ import Toolbar from '@mui/material/Toolbar'
 import MenuIcon from '@material-ui/icons/Menu'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
+import { Paper } from '@mui/material'
 
 export type Task = {
   id: string
@@ -141,16 +142,18 @@ export const App = () => {
 
             return (
               <Grid key={todolist.id}>
-                <TodolistItem todolist={todolist}
-                  tasks={filteredTasks}
-                  deleteTask={deleteTask}
-                  changeFilter={changeFilter}
-                  createTask={createTask}
-                  changeTaskStatus={changeTaskStatus}
-                  changeTaskTitle={changeTaskTitle}
-                  deleteTodolist={deleteTodolist}
-                  changeTodolistTitle={changeTodolistTitle}
-                />
+                <Paper>
+                  <TodolistItem todolist={todolist}
+                    tasks={filteredTasks}
+                    deleteTask={deleteTask}
+                    changeFilter={changeFilter}
+                    createTask={createTask}
+                    changeTaskStatus={changeTaskStatus}
+                    changeTaskTitle={changeTaskTitle}
+                    deleteTodolist={deleteTodolist}
+                    changeTodolistTitle={changeTodolistTitle}
+                  />
+                </Paper>
               </Grid>
             )
           })}
