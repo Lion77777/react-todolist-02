@@ -10,7 +10,7 @@ import Toolbar from '@mui/material/Toolbar'
 import MenuIcon from '@material-ui/icons/Menu'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
-import { Paper } from '@mui/material'
+import Paper from '@mui/material/Paper'
 
 export type Task = {
   id: string
@@ -115,7 +115,7 @@ export const App = () => {
 
   return (
     <div className="app">
-      <AppBar position='static'>
+      <AppBar position='static' sx={{ mb: '30px' }}>
         <Toolbar>
           <Container maxWidth={'lg'}>
             <IconButton color='inherit'>
@@ -126,7 +126,7 @@ export const App = () => {
         </Toolbar>
       </AppBar>
       <Container>
-        <Grid container>
+        <Grid container sx={{ mb: '30px' }}>
           <CreateItemForm createItem={createTodolist} />
         </Grid>
         <Grid container spacing={4}>
@@ -142,7 +142,7 @@ export const App = () => {
 
             return (
               <Grid key={todolist.id}>
-                <Paper>
+                <Paper sx={{ p: '0 20px 20px 20px' }}>
                   <TodolistItem todolist={todolist}
                     tasks={filteredTasks}
                     deleteTask={deleteTask}
