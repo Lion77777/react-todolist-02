@@ -12,6 +12,7 @@ import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import { NavButton } from './NavButton'
 import { containerSx } from './TodolistItem.styles'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 export type Task = {
   id: string
@@ -55,6 +56,14 @@ export const App = () => {
       { id: v1(), title: 'Go to market', isDone: true },
       { id: v1(), title: 'Go to gym', isDone: true },
     ],
+  })
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#087ea4'
+      }
+    }
   })
 
   const deleteTask = (todolistId: string, taskId: string) => {
@@ -116,6 +125,7 @@ export const App = () => {
 
   return (
     <div className="app">
+      <ThemeProvider theme={theme}>
       <AppBar position='static' sx={{ mb: '30px' }}>
         <Toolbar>
           <Container maxWidth={'lg'} sx={containerSx}>
@@ -125,7 +135,7 @@ export const App = () => {
             <div>
               <NavButton>Sign In</NavButton>
               <NavButton>Sign Up</NavButton>
-              <NavButton background='dodgerblue'>Faq</NavButton>
+              <NavButton background={theme.palette.primary.dark}>Faq</NavButton>
             </div>
           </Container>
         </Toolbar>
@@ -164,6 +174,7 @@ export const App = () => {
           })}
         </Grid>
       </Container>
+    </ThemeProvider>
     </div>
   )
 }

@@ -5,12 +5,12 @@ type Props = {
     background?: string
 }
 
-export const NavButton = styled(Button)<Props>(({background}) => ({
-    color: '#fff',
-    background: background || '#1565c0',
+export const NavButton = styled(Button)<Props>(({background, theme}) => ({
+    color: theme.palette.primary.contrastText,
+    background: background || theme.palette.primary.light,
     minWidth: '110px',
     fontWeight: 'bold',
-    boxShadow: '0 0 0 2px #054b62, 4px 4px 0 0 #054b62',
+    boxShadow: `0 0 0 2px ${theme.palette.primary.dark}, 4px 4px 0 0 ${theme.palette.primary.dark}`,
     borderRadius: '2px',
     textTransform: 'capitalize',
     margin: '0 10px',
