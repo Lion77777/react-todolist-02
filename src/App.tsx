@@ -4,13 +4,14 @@ import { v1 } from 'uuid'
 import { TodolistItem } from './TodolistItem'
 import { CreateItemForm } from './CreateItemForm'
 import AppBar from '@mui/material/AppBar'
-import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import Toolbar from '@mui/material/Toolbar'
 import MenuIcon from '@material-ui/icons/Menu'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
+import { NavButton } from './NavButton'
+import { containerSx } from './TodolistItem.styles'
 
 export type Task = {
   id: string
@@ -117,11 +118,15 @@ export const App = () => {
     <div className="app">
       <AppBar position='static' sx={{ mb: '30px' }}>
         <Toolbar>
-          <Container maxWidth={'lg'}>
+          <Container maxWidth={'lg'} sx={containerSx}>
             <IconButton color='inherit'>
               <MenuIcon />
             </IconButton>
-            <Button color='inherit'>Sign In</Button>
+            <div>
+              <NavButton>Sign In</NavButton>
+              <NavButton>Sign Up</NavButton>
+              <NavButton background='dodgerblue'>Faq</NavButton>
+            </div>
           </Container>
         </Toolbar>
       </AppBar>
