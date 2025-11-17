@@ -1,7 +1,7 @@
 import { v1 } from "uuid";
 import { beforeEach, expect, test } from "vitest";
 import { TaskState } from "../App";
-import { tasksReducer } from "./tasks-reducer";
+import { deleteTaskAC, tasksReducer } from "./tasks-reducer";
 import { createTodolistAC, deleteTodolistAC } from "./todolists-reducer";
 
 let todolistId1: string
@@ -14,14 +14,14 @@ beforeEach(() => {
 
     startState = {
         [todolistId1]: [
-            { id: v1(), title: 'HTML&CSS', isDone: true },
-            { id: v1(), title: 'JS', isDone: true },
-            { id: v1(), title: 'ReactJS', isDone: false },
+            { id: '1', title: 'HTML&CSS', isDone: true },
+            { id: '2', title: 'JS', isDone: true },
+            { id: '3', title: 'ReactJS', isDone: false },
         ],
         [todolistId2]: [
-            { id: v1(), title: 'Milk', isDone: true },
-            { id: v1(), title: 'Bread', isDone: true },
-            { id: v1(), title: 'Juice', isDone: false },
+            { id: '1', title: 'Milk', isDone: true },
+            { id: '2', title: 'Bread', isDone: true },
+            { id: '3', title: 'Juice', isDone: false },
         ]
     }
 })
@@ -47,4 +47,11 @@ test('todolist with tasks should be deleted', () => {
 
     expect(endState[todolistId1]).toBeUndefined()
     expect(keys.length).toBe(1)
+})
+
+test('correct task should be deleted', () => {
+    const endState = tasksReducer(startState, deleteTaskAC({todolistId: todolistId1, taskId: '2'}))
+
+    expect(endState[todolistId1].length).toBe(2)
+    expect(endState[todolistId1]['2']).not.toBeDefined()
 })
