@@ -16,7 +16,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
 import { changeTodolistFilterAC, changeTodolistTitleAC, createTodolistAC, deleteTodolistAC, todolistsReducer } from './model/todolists-reducer'
-import { createTaskAC, tasksReducer } from './model/tasks-reducer'
+import { tasksReducer } from './model/tasks-reducer'
 
 export type Task = {
   id: string
@@ -39,7 +39,6 @@ type ThemeMode = 'dark' | 'light'
 export const App = () => {
   const [todolists, dispatchTodolists] = useReducer(todolistsReducer, [])
 
-  // const [tasks, setTasks] = useState<TaskState>({})
   const [tasks, dispatchTasks] = useReducer(tasksReducer, {})
 
   const [themeMode, setThemeMode] = useState<ThemeMode>('light')
@@ -58,11 +57,11 @@ export const App = () => {
   }
 
   const deleteTask = (todolistId: string, taskId: string) => {
-    // const filteredTasks = tasks[todolistId].filter(task => {
-    //   return task.id !== taskId
-    // })
+    const filteredTasks = tasks[todolistId].filter(task => {
+      return task.id !== taskId
+    })
 
-    // setTasks((prev) => ({ ...prev, [todolistId]: filteredTasks }))
+    setTasks((prev) => ({ ...prev, [todolistId]: filteredTasks }))
   }
 
   const changeFilter = (todolistId: string, filter: FilterValues) => {
@@ -74,12 +73,10 @@ export const App = () => {
   }
 
   const createTask = (todolistId: string, title: string) => {
-    // const newTask = { id: v1(), title, isDone: false }
-    // const newTasks = [newTask, ...tasks[todolistId]]
+    const newTask = { id: v1(), title, isDone: false }
+    const newTasks = [newTask, ...tasks[todolistId]]
 
-    // setTasks((prev) => ({ ...prev, [todolistId]: newTasks }))
-
-    dispatchTasks(createTaskAC({todolistId, title}))
+    setTasks((prev) => ({ ...prev, [todolistId]: newTasks }))
   }
 
   const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
@@ -106,8 +103,7 @@ export const App = () => {
     const action = createTodolistAC(title)
 
     dispatchTodolists(action)
-    // setTasks(prev => ({ [action.payload.id]: [], ...prev }))
-    dispatchTasks(action)
+    setTasks(prev => ({ [action.payload.id]: [], ...prev }))
   }
 
   return (
