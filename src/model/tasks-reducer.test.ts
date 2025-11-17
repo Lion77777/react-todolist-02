@@ -1,7 +1,7 @@
 import { v1 } from "uuid";
 import { beforeEach, expect, test } from "vitest";
 import { TaskState } from "../App";
-import { deleteTaskAC, tasksReducer } from "./tasks-reducer";
+import { createTaskAC, deleteTaskAC, tasksReducer } from "./tasks-reducer";
 import { createTodolistAC, deleteTodolistAC } from "./todolists-reducer";
 
 let todolistId1: string
@@ -54,4 +54,13 @@ test('correct task should be deleted', () => {
 
     expect(endState[todolistId1].length).toBe(2)
     expect(endState[todolistId1]['2']).not.toBeDefined()
+})
+
+test('correct task should be created', () => {
+    const endState = tasksReducer(startState, createTaskAC({todolistId: todolistId1, title: 'New task'}))
+
+    expect(endState[todolistId1].length).toBe(4)
+    expect(endState[todolistId1][0].id).toBeDefined()
+    expect(endState[todolistId1][0].title).toBe('New task')
+    expect(endState[todolistId1][0].isDone).toBe(false)
 })
