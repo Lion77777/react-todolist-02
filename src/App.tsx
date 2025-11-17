@@ -1,5 +1,5 @@
 import './App.css'
-import { useState } from 'react'
+import { useReducer, useState } from 'react'
 import { v1 } from 'uuid'
 import { TodolistItem } from './TodolistItem'
 import { CreateItemForm } from './CreateItemForm'
@@ -15,6 +15,7 @@ import { containerSx } from './TodolistItem.styles'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
+import { todolistsReducer } from './model/todolists-reducer'
 
 export type Task = {
   id: string
@@ -35,32 +36,9 @@ export type FilterValues = 'all' | 'active' | 'completed'
 type ThemeMode = 'dark' | 'light'
 
 export const App = () => {
-  const todolistId1 = v1()
-  const todolistId2 = v1()
-  const todolistId3 = v1()
+  const [todolists, dispatchTodolists] = useReducer(todolistsReducer, [])
 
-  const [todolists, setTodolists] = useState<Todolist[]>([
-    { id: todolistId1, title: 'What to learn', filter: 'all' },
-    { id: todolistId2, title: 'What to buy', filter: 'all' },
-    { id: todolistId3, title: 'What to do', filter: 'all' },
-  ])
-
-  const [tasks, setTasks] = useState<TaskState>({
-    [todolistId1]: [
-      { id: v1(), title: 'HTML&CSS', isDone: true },
-      { id: v1(), title: 'JS', isDone: true },
-      { id: v1(), title: 'ReactJS', isDone: false },
-    ],
-    [todolistId2]: [
-      { id: v1(), title: 'Milk', isDone: true },
-      { id: v1(), title: 'Bread', isDone: true },
-      { id: v1(), title: 'Juice', isDone: false },
-    ],
-    [todolistId3]: [
-      { id: v1(), title: 'Go to market', isDone: true },
-      { id: v1(), title: 'Go to gym', isDone: true },
-    ],
-  })
+  const [tasks, setTasks] = useState<TaskState>({})
 
   const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
