@@ -1,36 +1,42 @@
 import { v1 } from 'uuid'
-import {expect, test} from 'vitest'
+import { beforeEach, expect, test } from 'vitest'
 import { Todolist } from '../App'
-import { createTodolistAC, deleteTodolistAC, todolistsReducer } from './todolists-reducer'
+import { changeTodolistTitleAC, createTodolistAC, deleteTodolistAC, todolistsReducer } from './todolists-reducer'
+
+let todolistId1: string
+let todolistId2: string
+let startState: Todolist[] = []
+
+beforeEach(() => {
+    todolistId1 = v1()
+    todolistId2 = v1()
+
+    startState = [
+        { id: todolistId1, title: 'Learn React', filter: 'all' },
+        { id: todolistId2, title: 'Learn Redux', filter: 'all' },
+    ]
+})
 
 test('correct todolist should be deleted', () => {
-    const todolist1 = v1()
-    const todolist2 = v1()
-
-    const startState: Todolist[] = [
-        {id: todolist1, title: 'Learn React', filter: 'all'},
-        {id: todolist2, title: 'Learn Redux', filter: 'all'},
-    ]
-
-    const endState = todolistsReducer(startState, deleteTodolistAC(todolist1))
+    const endState = todolistsReducer(startState, deleteTodolistAC(todolistId1))
 
     expect(endState.length).toBe(1)
-    expect(endState[0].id).toBe(todolist2)
+    expect(endState[0].id).toBe(todolistId2)
 })
 
 test('correct todolist should be created', () => {
-    const todolist1 = v1()
-    const todolist2 = v1()
-
-    const startState: Todolist[] = [
-        {id: todolist1, title: 'Learn React', filter: 'all'},
-        {id: todolist2, title: 'Learn Redux', filter: 'all'},
-    ]
-
     const title = 'New Todolist'
 
     const endState = todolistsReducer(startState, createTodolistAC(title))
 
     expect(endState.length).toBe(3)
     expect(endState[0].title).toBe(title)
+})
+
+test('correct todolist should change its title', () => {
+    const title = 'New title'
+
+    const endState = todolistsReducer(startState, changeTodolistTitleAC({id: todolistId1, title}))
+
+    expect(endState[0].title).toEqual(title)
 })
