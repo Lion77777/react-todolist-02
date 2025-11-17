@@ -15,7 +15,7 @@ import { containerSx } from './TodolistItem.styles'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
-import { todolistsReducer } from './model/todolists-reducer'
+import { changeTodolistFilterAC, changeTodolistTitleAC, createTodolistAC, deleteTodolistAC, todolistsReducer } from './model/todolists-reducer'
 
 export type Task = {
   id: string
@@ -64,15 +64,11 @@ export const App = () => {
   }
 
   const changeFilter = (todolistId: string, filter: FilterValues) => {
-    const filteredTodolists = todolists.map(todolist => todolist.id === todolistId ? { ...todolist, filter } : todolist)
-
-    setTodolists(filteredTodolists)
+    dispatchTodolists(changeTodolistFilterAC({id: todolistId, filter}))
   }
 
   const changeTodolistTitle = (todolistId: string, title: string) => {
-    const changedTodolists = todolists.map(todolist => todolist.id === todolistId ? { ...todolist, title } : todolist)
-
-    setTodolists(changedTodolists)
+    dispatchTodolists(changeTodolistTitleAC({id: todolistId, title}))
   }
 
   const createTask = (todolistId: string, title: string) => {
@@ -95,9 +91,7 @@ export const App = () => {
   }
 
   const deleteTodolist = (todolistId: string) => {
-    const filteredTodolists = todolists.filter(todolist => todolist.id !== todolistId)
-
-    setTodolists(filteredTodolists)
+    dispatchTodolists(deleteTodolistAC(todolistId))
 
     delete tasks[todolistId]
 
@@ -105,11 +99,10 @@ export const App = () => {
   }
 
   const createTodolist = (title: string) => {
-    const todolistId = v1()
-    const newTodolist: Todolist = { id: todolistId, title, filter: 'all' }
+    const action = createTodolistAC(title)
 
-    setTodolists(prev => [newTodolist, ...prev])
-    setTasks(prev => ({ [todolistId]: [], ...prev }))
+    dispatchTodolists(action)
+    setTasks(prev => ({ [action.payload.id]: [], ...prev }))
   }
 
   return (
