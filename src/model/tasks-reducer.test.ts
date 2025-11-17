@@ -2,7 +2,7 @@ import { v1 } from "uuid";
 import { beforeEach, expect, test } from "vitest";
 import { TaskState } from "../App";
 import { tasksReducer } from "./tasks-reducer";
-import { createTodolistAC } from "./todolists-reducer";
+import { createTodolistAC, deleteTodolistAC } from "./todolists-reducer";
 
 let todolistId1: string
 let todolistId2: string
@@ -38,4 +38,13 @@ test('array should be created for new todolist', () => {
 
     expect(keys.length).toBe(3)
     expect(endState[newKey]).toEqual([])
+})
+
+test('todolist with tasks should be deleted', () => {
+    const endState = tasksReducer(startState, deleteTodolistAC(todolistId1))
+
+    const keys = Object.keys(endState)
+
+    expect(endState[todolistId1]).toBeUndefined()
+    expect(keys.length).toBe(1)
 })
