@@ -1,6 +1,8 @@
 import { v1 } from "uuid";
-import { beforeEach } from "vitest";
+import { beforeEach, expect, test } from "vitest";
 import { TaskState } from "../App";
+import { tasksReducer } from "./tasks-reducer";
+import { createTodolistAC } from "./todolists-reducer";
 
 let todolistId1: string
 let todolistId2: string
@@ -22,4 +24,18 @@ beforeEach(() => {
             { id: v1(), title: 'Juice', isDone: false },
         ]
     }
+})
+
+test('array should be created for new todolist', () => {
+    const endState = tasksReducer(startState, createTodolistAC('New Todolist'))
+
+    const keys = Object.keys(endState)
+    const newKey = keys.find(key => key !== todolistId1 && key !== todolistId2)
+
+    if(!newKey) {
+        throw Error('New key should be added')
+    }
+
+    expect(keys.length).toBe(3)
+    expect(endState[newKey]).toEqual([])
 })
