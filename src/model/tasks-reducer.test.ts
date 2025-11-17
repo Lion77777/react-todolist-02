@@ -1,7 +1,7 @@
 import { v1 } from "uuid";
 import { beforeEach, expect, test } from "vitest";
 import { TaskState } from "../App";
-import { changeTaskStatusAC, createTaskAC, deleteTaskAC, tasksReducer } from "./tasks-reducer";
+import { changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC, tasksReducer } from "./tasks-reducer";
 import { createTodolistAC, deleteTodolistAC } from "./todolists-reducer";
 
 let todolistId1: string
@@ -73,7 +73,20 @@ test('correct task should change its status', () => {
     if(!task) {
         throw Error("Task wasn't found")
     }
-
+    
     expect(task.isDone).toBeFalsy()
+    expect(endState[todolistId2].length).toBe(3)
+})
+
+test('correct task should change its title', () => {
+    const endState = tasksReducer(startState, changeTaskTitleAC({todolistId: todolistId2, taskId: '1', title: 'Changed title'}))
+
+    const task = endState[todolistId2].find(task => task.id === '1')
+
+    if(!task) {
+        throw Error("Task wasn't found")
+    }
+
+    expect(task.title).toBe('Changed title')
     expect(endState[todolistId2].length).toBe(3)
 })
